@@ -11,7 +11,7 @@ import com.adalbertofjr.minhaviagem.R;
 /**
  * Created by AdalbertoF on 22/01/2016.
  */
-public class DashBoardActivity extends AppCompatActivity implements View.OnClickListener{
+public class DashBoardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mNovaViagem;
 
@@ -28,7 +28,9 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
 
-        if(v.getId() == R.id.nova_viagem){
+        int id = v.getId();
+
+        if (id == R.id.nova_viagem) {
             startActivity(new Intent(this, NovaViagemActivity.class));
         }
 
