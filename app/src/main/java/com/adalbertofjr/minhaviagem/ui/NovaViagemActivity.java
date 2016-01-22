@@ -17,6 +17,7 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nova_viagem);
+        getSupportActionBar().setTitle("Nova Viagem");
 
     }
 
