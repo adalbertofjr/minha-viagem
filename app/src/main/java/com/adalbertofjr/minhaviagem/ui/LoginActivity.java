@@ -33,15 +33,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        int viewId = v.getId();
+        int id = v.getId();
 
-        if(viewId == R.id.entrar){
+        if (id == R.id.entrar) {
             String usuario = mUsuario.getText().toString();
             String senha = mSenha.getText().toString();
 
-            if("leitor".equals(usuario) && "123".equals(senha)){
+            if ("leitor".equals(usuario) && "123".equals(senha)) {
                 startActivity(new Intent(this, DashBoardActivity.class));
-            }else{
+            } else {
                 Toast.makeText(this, "Usuário ou senha inválidos", Toast.LENGTH_SHORT).show();
             }
         }

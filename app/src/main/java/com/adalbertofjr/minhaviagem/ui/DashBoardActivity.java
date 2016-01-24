@@ -14,6 +14,7 @@ import com.adalbertofjr.minhaviagem.R;
 public class DashBoardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mNovaViagem;
+    private TextView mNovoGasto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +22,10 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_dashboard);
 
         mNovaViagem = (TextView) findViewById(R.id.nova_viagem);
+        mNovoGasto = (TextView) findViewById(R.id.novo_gasto);
 
         mNovaViagem.setOnClickListener(this);
+        mNovoGasto.setOnClickListener(this);
     }
 
     @Override
@@ -32,6 +35,10 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
 
         if (id == R.id.nova_viagem) {
             startActivity(new Intent(this, NovaViagemActivity.class));
+        }
+
+        if (id == R.id.novo_gasto){
+            startActivity(new Intent(this, NovoGastoActivity.class));
         }
 
     }

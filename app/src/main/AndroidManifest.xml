@@ -19,7 +19,8 @@
         <activity
             android:name=".ui.NovaViagemActivity"
             android:parentActivityName=".ui.DashBoardActivity" />
-
+        <activity android:name=".ui.NovoGastoActivity"
+            android:parentActivityName=".ui.DashBoardActivity" />
     </application>
 
 </manifest>
