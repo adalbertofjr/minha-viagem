@@ -24,6 +24,8 @@
     <string name="descricao">Descrição:</string>
     <string name="local">Local:</string>
     <string name="gastei_button">Gastei!</string>
+    <string name="sair">Sair</string>
+    <string name="remover">Remover</string>
 
 
     <string-array name="tipo_gasto">

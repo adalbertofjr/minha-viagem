@@ -2,6 +2,8 @@ package com.adalbertofjr.minhaviagem.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,11 +24,12 @@ import java.util.Map;
 public class GastoListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private List<Map<String, Object>> mGastos;
+    private ListView mListaGastos;
 
+    private String dataAnterior = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ListView mListaGastos;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_gastos);
 
@@ -44,7 +47,31 @@ public class GastoListActivity extends AppCompatActivity implements AdapterView.
         simpleAdapter.setViewBinder(new GastoViewBinder());
         mListaGastos.setAdapter(simpleAdapter);
 
+        registerForContextMenu(mListaGastos);
+
         mListaGastos.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.menu_gasto, menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.remover) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)
+                    item.getMenuInfo();
+            mGastos.remove(info.position);
+            mListaGastos.invalidateViews();
+            dataAnterior = "";
+
+            //Todo - Remover gasto do banco
+
+            return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
     private List<Map<String, Object>> listarGastos() {
@@ -86,29 +113,27 @@ public class GastoListActivity extends AppCompatActivity implements AdapterView.
         Map<String, Object> map = mGastos.get(position);
         String descricao = (String) map.get("descricao");
         String mensagem = "Gasto selecionado: " + descricao;
-        Toast.makeText(this, mensagem, Toast.LENGTH_SHORT ).show();
+        Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
     }
 
-    private String dataAnterior = "";
-
-    private class GastoViewBinder implements SimpleAdapter.ViewBinder{
+    private class GastoViewBinder implements SimpleAdapter.ViewBinder {
 
         @Override
         public boolean setViewValue(View view, Object data, String textRepresentation) {
 
-            if (view.getId() == R.id.data){
-                if(!dataAnterior.equals(data)){
+            if (view.getId() == R.id.data) {
+                if (!dataAnterior.equals(data)) {
                     TextView textView = (TextView) view;
                     textView.setText(textRepresentation);
                     dataAnterior = textRepresentation;
                     view.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     view.setVisibility(View.GONE);
                 }
                 return true;
             }
 
-            if (view.getId() == R.id.categoria){
+            if (view.getId() == R.id.categoria) {
                 Integer id = (Integer) data;
                 view.setBackgroundColor(getResources().getColor(id));
                 return true;
