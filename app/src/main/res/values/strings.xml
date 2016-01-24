@@ -6,4 +6,22 @@
     <string name="novo_gasto">Novo Gasto</string>
     <string name="nova_viagem">Nova Viagem</string>
     <string name="minhas_viagens">Minhas Viagens</string>
+    <string name="destino">Destino:</string>
+    <string name="tipo_de_viagem">Tipo de Viagem:</string>
+    <string name="lazer">Lazer</string>
+    <string name="negocios">Negócios</string>
+    <string name="data_chegada">Data de Chegada</string>
+    <string name="data_de_partida">Data de Partida</string>
+    <string name="data_exemplo">22/01/2016</string>
+    <string name="orcamento">Orçamento:</string>
+    <string name="valor_exemplo">R$ 4.500,00</string>
+    <string name="quantidade_pessoas">Quantidade de pessoas:</string>
+    <string name="quantidade_exemplo">4</string>
+    <string name="salvar_viagem">Salvar Viagem</string>
+    <string name="tipo_gasto">Tipo:</string>
+    <string name="valor">Valor</string>
+    <string name="data">Data</string>
+    <string name="descricao">Descrição:</string>
+    <string name="local">Local:</string>
+    <string name="gastei_button">Gastei!</string>
 </resources>

@@ -5,14 +5,14 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/padding_default">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Destino:" />
+            android:text="@string/destino" />
 
         <EditText
             android:id="@+id/destino"
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="Tipo de Viagem:" />
+            android:text="@string/tipo_de_viagem" />
 
         <RadioGroup
             android:id="@+id/tipo_viagem"
@@ -37,14 +37,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="Lazer" />
+                android:text="@string/lazer" />
 
             <RadioButton
                 android:id="@+id/negocios"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Negócios" />
+                android:text="@string/negocios" />
         </RadioGroup>
 
         <LinearLayout
@@ -58,14 +58,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Data de Chegada" />
+                android:text="@string/data_chegada" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Data de Partida" />
+                android:text="@string/data_de_partida" />
 
         </LinearLayout>
 
@@ -80,14 +80,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="22/01/2016" />
+                android:text="@string/data_exemplo" />
 
             <Button
                 android:id="@+id/data_partida"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="22/01/2016" />
+                android:text="@string/data_exemplo" />
 
         </LinearLayout>
 
@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="Orçamento:" />
+            android:text="@string/orcamento" />
 
         <EditText
             android:id="@+id/orcamento"
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:inputType="numberDecimal"
-            android:text="R$ 4.500,00" />
+            android:text="@string/valor_exemplo" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,7 +114,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quantidade de pessoas:" />
+                android:text="@string/quantidade_pessoas" />
 
             <EditText
                 android:id="@+id/qtd_pessoas"
@@ -123,7 +123,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:gravity="center"
                 android:inputType="number"
-                android:text="4" />
+                android:text="@string/quantidade_exemplo" />
         </LinearLayout>
 
         <Button
@@ -131,6 +131,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="Salvar Viagem" />
+            android:text="@string/salvar_viagem" />
     </LinearLayout>
 </ScrollView>
