@@ -24,4 +24,13 @@
     <string name="descricao">Descrição:</string>
     <string name="local">Local:</string>
     <string name="gastei_button">Gastei!</string>
+
+
+    <string-array name="tipo_gasto">
+        <item>Alimentação</item>
+        <item>Combustível</item>
+        <item>Tranporte</item>
+        <item>Hospedagem</item>
+        <item>Outros</item>
+    </string-array>
 </resources>
