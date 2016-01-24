@@ -19,16 +19,22 @@ import java.util.List;
 /**
  * Created by AdalbertoF on 24/01/2016.
  */
-public class ViagemListActivity extends ListActivity implements AdapterView.OnItemClickListener {
+public class ViagemListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    ListView mListarViagens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_viagens);
 
-        setListAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, listarViagens()));
-        ListView listaViagens = getListView();
-        listaViagens.setOnItemClickListener(this);
+        mListarViagens = (ListView) findViewById(R.id.listar_viagens);
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, listarViagens());
+        mListarViagens.setAdapter(adapter);
+
+        mListarViagens.setOnItemClickListener(this);
     }
 
     private List<String> listarViagens() {
