@@ -13,7 +13,6 @@ import android.widget.Spinner;
 
 import com.adalbertofjr.minhaviagem.R;
 
-import java.lang.reflect.Array;
 import java.util.Calendar;
 
 /**
@@ -21,10 +20,10 @@ import java.util.Calendar;
  */
 public class NovoGastoActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private Spinner mTipoGasto;
     private Button mDataGasto;
 
     int ano, mes, dia;
-    private Spinner mTipoGasto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +57,10 @@ public class NovoGastoActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-
         int id = v.getId();
         if (id == R.id.data_gasto) {
             showDialog(id);
         }
-
     }
 
     /**

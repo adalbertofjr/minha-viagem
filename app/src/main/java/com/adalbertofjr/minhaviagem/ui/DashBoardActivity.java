@@ -15,6 +15,7 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
 
     private TextView mNovaViagem;
     private TextView mNovoGasto;
+    private TextView mMinhasViagens;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +24,11 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
 
         mNovaViagem = (TextView) findViewById(R.id.nova_viagem);
         mNovoGasto = (TextView) findViewById(R.id.novo_gasto);
+        mMinhasViagens = (TextView) findViewById(R.id.minhas_viagens);
 
         mNovaViagem.setOnClickListener(this);
         mNovoGasto.setOnClickListener(this);
+        mMinhasViagens.setOnClickListener(this);
     }
 
     @Override
@@ -39,6 +42,10 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
 
         if (id == R.id.novo_gasto){
             startActivity(new Intent(this, NovoGastoActivity.class));
+        }
+
+        if( id == R.id.minhas_viagens){
+            startActivity(new Intent(this, ViagemListActivity.class));
         }
 
     }
