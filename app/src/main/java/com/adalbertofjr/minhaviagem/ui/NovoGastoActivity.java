@@ -14,5 +14,6 @@ public class NovoGastoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_gasto);
+        getSupportActionBar().setTitle("Novo gasto - Recife");
     }
 }
