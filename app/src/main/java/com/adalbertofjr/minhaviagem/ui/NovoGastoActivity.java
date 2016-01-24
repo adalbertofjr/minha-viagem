@@ -45,12 +45,16 @@ public class NovoGastoActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
 
-        if(v.getId() == R.id.data_gasto){
-            showDialog(v.getId());
+        int id = v.getId();
+        if(id == R.id.data_gasto){
+            showDialog(id);
         }
 
     }
 
+    /**
+     * Selecionar data para despesa.
+     */
     @Override
     protected Dialog onCreateDialog(int id) {
         if(id == R.id.data_gasto){
