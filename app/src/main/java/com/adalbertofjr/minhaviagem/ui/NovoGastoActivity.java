@@ -23,7 +23,7 @@ public class NovoGastoActivity extends AppCompatActivity implements View.OnClick
     private Spinner mTipoGasto;
     private Button mDataGasto;
 
-    int ano, mes, dia;
+    private int ano, mes, dia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
