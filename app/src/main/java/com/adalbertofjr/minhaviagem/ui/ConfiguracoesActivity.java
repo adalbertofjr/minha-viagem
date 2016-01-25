@@ -2,7 +2,6 @@ package com.adalbertofjr.minhaviagem.ui;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.support.v7.app.AppCompatActivity;
 
 import com.adalbertofjr.minhaviagem.R;
 
