@@ -32,6 +32,10 @@
         <activity
             android:name=".ui.GastoListActivity"
             android:parentActivityName=".ui.ViagemListActivity" />
+
+        <activity
+            android:name=".ui.ConfiguracoesActivity"
+            android:parentActivityName=".ui.DashBoardActivity" />
     </application>
 
 </manifest>

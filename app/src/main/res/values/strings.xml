@@ -31,6 +31,10 @@
     <string name="opcoes">Opções</string>
     <string name="cancelar">Cancelar</string>
     <string name="message_remover_viagem">Remover viagem?</string>
+    <string name="modo_viagem_sumario">Determinar viagem ativa.</string>
+    <string name="modo_viagem">Modo Viagem</string>
+    <string name="valor_limite">Alerta de Gastos</string>
+    <string name="valor_limite_sumario">Notificar quando atingir limite</string>
 
 
     <string-array name="tipo_gasto">
