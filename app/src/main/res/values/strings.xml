@@ -26,6 +26,11 @@
     <string name="gastei_button">Gastei!</string>
     <string name="sair">Sair</string>
     <string name="remover">Remover</string>
+    <string name="editar">Editar</string>
+    <string name="gastos_realizados">Gastos Realizados</string>
+    <string name="opcoes">Opções</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="message_remover_viagem">Remover viagem?</string>
 
 
     <string-array name="tipo_gasto">

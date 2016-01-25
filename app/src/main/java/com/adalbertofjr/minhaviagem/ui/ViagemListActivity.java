@@ -1,13 +1,15 @@
 package com.adalbertofjr.minhaviagem.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.adalbertofjr.minhaviagem.R;
 
@@ -23,6 +25,9 @@ public class ViagemListActivity extends AppCompatActivity implements AdapterView
 
     private ListView mListarViagens;
     private List<Map<String, Object>> mViagens;
+    private AlertDialog mAlertDialog;
+    private int mViagemSelecionada;
+    private AlertDialog mAlertDialogConfirmacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,8 @@ public class ViagemListActivity extends AppCompatActivity implements AdapterView
         mListarViagens.setAdapter(simpleAdapter);
 
         mListarViagens.setOnItemClickListener(this);
+        this.mAlertDialog = criarAlertDialog();
+        this.mAlertDialogConfirmacao = criarAlertConfirmacao();
     }
 
     private List<Map<String, Object>> listarViagens() {
@@ -66,6 +73,68 @@ public class ViagemListActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        startActivity(new Intent(this, GastoListActivity.class));
+        //startActivity(new Intent(this, GastoListActivity.class));
+        this.mViagemSelecionada = position;
+        mAlertDialog.show();
+    }
+
+    /**
+     * Menu Contexto para viagens.
+     */
+    private AlertDialog criarAlertDialog() {
+        final String[] items = {
+                getString(R.string.editar),
+                getString(R.string.novo_gasto),
+                getString(R.string.gastos_realizados),
+                getString(R.string.remover)
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.opcoes));
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        startActivity(new Intent(ViagemListActivity.this, NovaViagemActivity.class));
+                        break;
+                    case 1:
+                        startActivity(new Intent(ViagemListActivity.this, NovoGastoActivity.class));
+                        break;
+                    case 2:
+                        startActivity(new Intent(ViagemListActivity.this, GastoListActivity.class));
+                        break;
+                    case 3:
+                        mAlertDialogConfirmacao.show();
+                        break;
+                }
+            }
+        });
+        return builder.create();
+    }
+
+    /**
+     * Confirmar remoção de viagem.
+     * @return
+     */
+    private AlertDialog criarAlertConfirmacao() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.message_remover_viagem));
+        builder.setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mAlertDialogConfirmacao.dismiss();
+            }
+        });
+        builder.setPositiveButton(getString(R.string.remover), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Todo - Remover viagem no banco de dados
+                mViagens.remove(mViagemSelecionada);
+                mListarViagens.invalidateViews();
+            }
+        });
+
+        return builder.create();
     }
 }
