@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -36,14 +37,15 @@ public class ViagemListActivity extends AppCompatActivity implements AdapterView
 
         mListarViagens = (ListView) findViewById(R.id.listar_viagens);
 
-        String from[] = {"imagem", "destino", "data", "total"};
-        int[] to = {R.id.tipo_viagem, R.id.destino, R.id.data, R.id.valor};
+        String from[] = {"imagem", "destino", "data", "total", "barraProgresso"};
+        int[] to = {R.id.tipo_viagem, R.id.destino, R.id.data, R.id.valor, R.id.barra_progresso};
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(this, listarViagens(),
                 R.layout.lista_viagem,
                 from,
                 to);
 
+        simpleAdapter.setViewBinder(new ViagemViewBinder());
         mListarViagens.setAdapter(simpleAdapter);
 
         mListarViagens.setOnItemClickListener(this);
@@ -58,14 +60,16 @@ public class ViagemListActivity extends AppCompatActivity implements AdapterView
         item.put("imagem", R.mipmap.ic_launcher);
         item.put("destino", "São Paulo");
         item.put("data", "24/01/2016 a 28/01/2016");
-        item.put("total", "Gasto total de R$ 34,18");
+        item.put("total", "Gasto total de R$ 314,98");
+        item.put("barraProgresso", new Double[]{ 500.0, 450.0, 314.98});
         mViagens.add(item);
 
         item = new HashMap<>();
         item.put("imagem", R.mipmap.ic_launcher);
         item.put("destino", "Maceió");
         item.put("data", "24/01/2016 a 28/01/2016");
-        item.put("total", "Gasto total de R$ 3445,18");
+        item.put("total", "Gasto total de R$ 14,98");
+        item.put("barraProgresso", new Double[]{ 200.0, 150.0, 14.98});
         mViagens.add(item);
 
         return mViagens;
@@ -136,5 +140,23 @@ public class ViagemListActivity extends AppCompatActivity implements AdapterView
         });
 
         return builder.create();
+    }
+
+    private class ViagemViewBinder implements SimpleAdapter.ViewBinder{
+
+        @Override
+        public boolean setViewValue(View view, Object data, String textRepresentation) {
+            if(view.getId() == R.id.barra_progresso){
+                Double valores[] = (Double[]) data;
+                ProgressBar progressBar= (ProgressBar) view;
+                progressBar.setMax(valores[0].intValue());
+                progressBar.setSecondaryProgress(valores[1].intValue());
+                progressBar.setProgress(valores[2].intValue());
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }

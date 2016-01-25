@@ -41,6 +41,12 @@
             android:layout_height="wrap_content"
             android:text="@string/valor_exemplo"/>
 
+        <ProgressBar
+            android:id="@+id/barra_progresso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
+
     </LinearLayout>
 
 
