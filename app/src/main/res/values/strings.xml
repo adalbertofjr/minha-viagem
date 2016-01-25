@@ -36,6 +36,7 @@
     <string name="valor_limite">Alerta de Gastos</string>
     <string name="valor_limite_sumario">Notificar quando atingir limite</string>
     <string name="manter_conectado">Manter conectado</string>
+    <string name="configuracoes">Configurações</string>
 
 
     <string-array name="tipo_gasto">
