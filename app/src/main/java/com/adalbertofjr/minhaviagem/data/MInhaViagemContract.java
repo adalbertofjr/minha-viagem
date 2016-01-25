@@ -15,6 +15,9 @@ public class MinhaViagemContract {
         public static final String DATA_SAIDA = "data_saida";
         public static final String ORCAMENTO = "orcamento";
         public static final String QTD_PESSOAS = "quantidade_pessoas";
+
+        public static final int VIAGEM_LAZER = 1;
+        public static final int VIAGEM_NEGOCIOS = 2;
     }
 
     public static final class GastoEntry{
