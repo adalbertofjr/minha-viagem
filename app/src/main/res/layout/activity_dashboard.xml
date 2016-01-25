@@ -53,7 +53,7 @@
             android:layout_below="@+id/nova_viagem"
             android:clickable="true"
             android:drawableTop="@mipmap/ic_launcher"
-            android:text="Configuracoes"
+            android:text="@string/configuracoes"
             android:textStyle="bold" />
     </RelativeLayout>
 </LinearLayout>
