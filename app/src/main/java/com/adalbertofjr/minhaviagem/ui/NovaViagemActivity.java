@@ -63,6 +63,7 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
 
         mDataChegada.setOnClickListener(this);
         mDataPartida.setOnClickListener(this);
+        mSalvaViagem.setOnClickListener(this);
 
         mHelper = new MinhaViagemDbHelper(this);
 
@@ -79,6 +80,10 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
 
         if(id == R.id.data_partida){
             showDialog(id);
+        }
+
+        if(id == R.id.salvar_viagem){
+            salvarViagem();
         }
 
     }
@@ -106,12 +111,12 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
         return super.onOptionsItemSelected(item);
     }
 
-    public void salvarViagem(View v){
+    public void salvarViagem(){
         SQLiteDatabase db = mHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(ViagemEntry.DESTINO, mDestino.getText().toString());
-        values.put(ViagemEntry.DATA_CHEGADA, "");
+        values.put(ViagemEntry.DATA_CHEGADA, ""); //Todo - data chegada e data de saida
         values.put(ViagemEntry.DATA_SAIDA, "");
         values.put(ViagemEntry.ORCAMENTO, mOrcamento.getText().toString());
         values.put(ViagemEntry.QTD_PESSOAS, mQuantidadePesssoas.getText().toString());
