@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,19 +18,22 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.adalbertofjr.minhaviagem.R;
+import com.adalbertofjr.minhaviagem.data.MinhaViagemContract;
 import com.adalbertofjr.minhaviagem.data.MinhaViagemDbHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.GastoEntry;
 import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry;
 
 /**
  * Created by AdalbertoF on 22/01/2016.
  */
-public class NovaViagemActivity extends AppCompatActivity implements View.OnClickListener{
+public class ViagemActivity extends AppCompatActivity implements View.OnClickListener{
 
-
+    public static final String VIAGEM_EXTRA = "viagem_id";
     private int ano;
     private int mes;
     private int dia;
@@ -44,6 +48,7 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
     private Button mSalvaViagem;
 
     private MinhaViagemDbHelper mHelper;
+    private int mViagemId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +64,47 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
         mQuantidadePesssoas = (EditText) findViewById(R.id.qtd_pessoas);
         mSalvaViagem = (Button) findViewById(R.id.salvar_viagem);
 
+        mHelper = new MinhaViagemDbHelper(this);
+
+        mViagemId = getIntent().getIntExtra(VIAGEM_EXTRA, -1);
+
         setDataInicial(mDataChegada);
         setDataInicial(mDataPartida);
+
+        if (mViagemId != -1){
+            prepararEdicao(mViagemId);
+        }
 
         mDataChegada.setOnClickListener(this);
         mDataPartida.setOnClickListener(this);
         mSalvaViagem.setOnClickListener(this);
 
-        mHelper = new MinhaViagemDbHelper(this);
+
+    }
+
+    private void prepararEdicao(int mViagemId) {
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        Cursor cursor =
+                db.rawQuery("SELECT * FROM VIAGEM WHERE _ID = ?", new String[]{mViagemId + ""});
+        cursor.moveToFirst();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        if(cursor.getInt(0) == ViagemEntry.VIAGEM_LAZER){
+            mTipoViagem.check(R.id.lazer);
+        }else{
+            mTipoViagem.check(R.id.negocios);
+        }
+
+        mDestino.setText(cursor.getString(cursor.getColumnIndex(ViagemEntry.DESTINO)));
+        dataChegada = new Date(cursor.getLong(cursor.getColumnIndex(ViagemEntry.DATA_CHEGADA)));
+        dataPartida = new Date(cursor.getLong(cursor.getColumnIndex(ViagemEntry.DATA_SAIDA)));
+        mDataChegada.setText(dateFormat.format(dataChegada));
+        mDataPartida.setText(dateFormat.format(dataPartida));
+        mQuantidadePesssoas.setText(cursor.getString(cursor.getColumnIndex(ViagemEntry.QTD_PESSOAS)));
+        mOrcamento.setText(cursor.getString(cursor.getColumnIndex(ViagemEntry.ORCAMENTO)));
+        cursor.close();
 
     }
 
@@ -99,7 +137,7 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.novo_gasto){
-            startActivity(new Intent(this, NovoGastoActivity.class));
+            startActivity(new Intent(this, GastoActivity.class));
             return true;
         }
 
@@ -107,7 +145,6 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
             //TODO - Remover viagem
             Toast.makeText(this, "Remover Viagem", Toast.LENGTH_SHORT).show();
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -130,10 +167,19 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
             values.put(ViagemEntry.TIPO_VIAGEM, ViagemEntry.VIAGEM_NEGOCIOS);
         }
 
-        long resultado = db.insert(ViagemEntry.TABLE_NAME, null, values);
+        long resultado;
+
+        if(mViagemId == -1){
+            resultado = db.insert(ViagemEntry.TABLE_NAME, null, values);
+        }else{
+            String[] args = new String[]{mViagemId + ""};
+            String where = ViagemEntry.ID + "=?";
+            resultado = db.update(ViagemEntry.TABLE_NAME, values, where, args);
+        }
 
         if(resultado != -1){
-            Toast.makeText(this, "Viagem Incluida!", Toast.LENGTH_SHORT).show();
+            String msg = mViagemId == -1 ? "Viagem Incluida!" :  "Viagem Atualizada!";
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Erro ao Incluir!", Toast.LENGTH_SHORT).show();
         }
@@ -193,6 +239,8 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
         ano = calendario.get(Calendar.YEAR);
         mes = calendario.get(Calendar.MONTH);
         dia = calendario.get(Calendar.DAY_OF_MONTH);
+        dataChegada = criarData(ano, mes, dia);
+        dataPartida = criarData(ano, mes, dia);
         b.setText(String.format("%s/%s/%s", dia, (mes + 1), ano));
     }
 }

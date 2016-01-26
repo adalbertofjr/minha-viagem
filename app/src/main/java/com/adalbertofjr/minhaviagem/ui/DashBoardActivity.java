@@ -43,11 +43,11 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
         int id = v.getId();
 
         if (id == R.id.nova_viagem) {
-            startActivity(new Intent(this, NovaViagemActivity.class));
+            startActivity(new Intent(this, ViagemActivity.class));
         }
 
         if (id == R.id.novo_gasto){
-            startActivity(new Intent(this, NovoGastoActivity.class));
+            startActivity(new Intent(this, GastoActivity.class));
         }
 
         if( id == R.id.minhas_viagens){

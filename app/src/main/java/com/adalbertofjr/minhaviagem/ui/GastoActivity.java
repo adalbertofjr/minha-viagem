@@ -21,7 +21,7 @@ import java.util.Calendar;
 /**
  * Created by AdalbertoF on 22/01/2016.
  */
-public class NovoGastoActivity extends AppCompatActivity implements View.OnClickListener {
+public class GastoActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Spinner mTipoGasto;
     private Button mDataGasto;

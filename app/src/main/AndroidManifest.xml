@@ -18,11 +18,11 @@
         </activity>
 
         <activity
-            android:name=".ui.NovaViagemActivity"
+            android:name=".ui.ViagemActivity"
             android:parentActivityName=".ui.DashBoardActivity" />
 
         <activity
-            android:name=".ui.NovoGastoActivity"
+            android:name=".ui.GastoActivity"
             android:parentActivityName=".ui.DashBoardActivity" />
 
         <activity

@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.adalbertofjr.minhaviagem.R;
 import com.adalbertofjr.minhaviagem.data.MinhaViagemContract;
@@ -161,12 +160,15 @@ public class ViagemListActivity extends AppCompatActivity implements AdapterView
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                int id = (int) mViagens.get(mViagemSelecionada).get(ID);
                 switch (which) {
                     case 0:
-                        startActivity(new Intent(ViagemListActivity.this, NovaViagemActivity.class));
+                        Intent intent = new Intent(ViagemListActivity.this, ViagemActivity.class);
+                        intent.putExtra(ViagemActivity.VIAGEM_EXTRA, id);
+                        startActivity(intent);
                         break;
                     case 1:
-                        startActivity(new Intent(ViagemListActivity.this, NovoGastoActivity.class));
+                        startActivity(new Intent(ViagemListActivity.this, GastoActivity.class));
                         break;
                     case 2:
                         startActivity(new Intent(ViagemListActivity.this, GastoListActivity.class));
@@ -197,13 +199,21 @@ public class ViagemListActivity extends AppCompatActivity implements AdapterView
         builder.setPositiveButton(getString(R.string.remover), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //Todo - Remover viagem no banco de dados
+                int id = (int) mViagens.get(mViagemSelecionada).get(ID);
                 mViagens.remove(mViagemSelecionada);
+                removerViagem(id);
                 mListarViagens.invalidateViews();
             }
         });
 
         return builder.create();
+    }
+
+    private void removerViagem(int id) {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        String where []  = new String[]{id + ""};
+        db.delete(MinhaViagemContract.GastoEntry.TABLE_NAME, "VIAGEM_ID = ?", where);
+        db.delete(MinhaViagemContract.ViagemEntry.TABLE_NAME, "_ID = ?", where);
     }
 
     private class ViagemViewBinder implements SimpleAdapter.ViewBinder {
