@@ -20,6 +20,7 @@ import com.adalbertofjr.minhaviagem.R;
 import com.adalbertofjr.minhaviagem.data.MinhaViagemDbHelper;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry;
 
@@ -29,16 +30,19 @@ import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry;
 public class NovaViagemActivity extends AppCompatActivity implements View.OnClickListener{
 
 
-    private Button mDataChegada;
-    private Button mDataPartida;
     private int ano;
     private int mes;
     private int dia;
+    private Date dataChegada, dataPartida;
+
+    private Button mDataPartida;
+    private Button mDataChegada;
     private EditText mDestino;
     private RadioGroup mTipoViagem;
     private EditText mOrcamento;
     private EditText mQuantidadePesssoas;
     private Button mSalvaViagem;
+
     private MinhaViagemDbHelper mHelper;
 
     @Override
@@ -113,13 +117,13 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
 
         ContentValues values = new ContentValues();
         values.put(ViagemEntry.DESTINO, mDestino.getText().toString());
-
-        values.put(ViagemEntry.DATA_CHEGADA, ""); //Todo - data chegada e data de saida
-        values.put(ViagemEntry.DATA_SAIDA, "");
-
+        values.put(ViagemEntry.DATA_CHEGADA, dataChegada.getTime());
+        values.put(ViagemEntry.DATA_SAIDA, dataPartida.getTime());
         values.put(ViagemEntry.ORCAMENTO, mOrcamento.getText().toString());
         values.put(ViagemEntry.QTD_PESSOAS, mQuantidadePesssoas.getText().toString());
+
         int id = mTipoViagem.getCheckedRadioButtonId();
+
         if (id == R.id.lazer){
             values.put(ViagemEntry.TIPO_VIAGEM, ViagemEntry.VIAGEM_LAZER);
         }else {
@@ -162,6 +166,7 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
             ano = year;
             mes = monthOfYear;
             dia = dayOfMonth;
+            dataChegada = criarData(ano, mes, dia);
             mDataChegada.setText(String.format("%s/%s/%s", dia, (mes + 1), ano));
         }
     };
@@ -172,9 +177,16 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
             ano = year;
             mes = monthOfYear;
             dia = dayOfMonth;
+            dataPartida = criarData(ano, mes, dia);
             mDataPartida.setText(String.format("%s/%s/%s", dia, (mes + 1), ano));
         }
     };
+
+    private Date criarData(int anoSelecionado, int mesSelecionado, int diaSelecionado) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(anoSelecionado, mesSelecionado, diaSelecionado);
+        return calendar.getTime();
+    }
 
     private void setDataInicial(Button b) {
         Calendar calendario = Calendar.getInstance();
