@@ -14,16 +14,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adalbertofjr.minhaviagem.R;
-import com.adalbertofjr.minhaviagem.data.MinhaViagemContract;
 import com.adalbertofjr.minhaviagem.data.MinhaViagemDbHelper;
 
 import java.util.Calendar;
 
-import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.*;
+import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry;
 
 /**
  * Created by AdalbertoF on 22/01/2016.
@@ -36,7 +34,6 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
     private int ano;
     private int mes;
     private int dia;
-    private Button mButtonDateSelected;
     private EditText mDestino;
     private RadioGroup mTipoViagem;
     private EditText mOrcamento;
@@ -116,8 +113,10 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
 
         ContentValues values = new ContentValues();
         values.put(ViagemEntry.DESTINO, mDestino.getText().toString());
+
         values.put(ViagemEntry.DATA_CHEGADA, ""); //Todo - data chegada e data de saida
         values.put(ViagemEntry.DATA_SAIDA, "");
+
         values.put(ViagemEntry.ORCAMENTO, mOrcamento.getText().toString());
         values.put(ViagemEntry.QTD_PESSOAS, mQuantidadePesssoas.getText().toString());
         int id = mTipoViagem.getCheckedRadioButtonId();
@@ -147,25 +146,33 @@ public class NovaViagemActivity extends AppCompatActivity implements View.OnClic
      */
     @Override
     protected Dialog onCreateDialog(int id) {
-        mButtonDateSelected = (Button) findViewById(id);
-
         if(id == R.id.data_chegada){
-            return new DatePickerDialog(this, listener, ano, mes, dia);
+            return new DatePickerDialog(this, dataChegadalistener, ano, mes, dia);
         }
 
         if(id == R.id.data_partida){
-            return new DatePickerDialog(this, listener, ano, mes, dia);
+            return new DatePickerDialog(this, dataSaidaListener, ano, mes, dia);
         }
         return null;
     }
 
-    private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener(){
+    private DatePickerDialog.OnDateSetListener dataChegadalistener = new DatePickerDialog.OnDateSetListener(){
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             ano = year;
             mes = monthOfYear;
             dia = dayOfMonth;
-            mButtonDateSelected.setText(String.format("%s/%s/%s", dia, (mes + 1), ano));
+            mDataChegada.setText(String.format("%s/%s/%s", dia, (mes + 1), ano));
+        }
+    };
+
+    private DatePickerDialog.OnDateSetListener dataSaidaListener = new DatePickerDialog.OnDateSetListener(){
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            ano = year;
+            mes = monthOfYear;
+            dia = dayOfMonth;
+            mDataPartida.setText(String.format("%s/%s/%s", dia, (mes + 1), ano));
         }
     };
 
