@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.adalbertofjr.minhaviagem.data.MinhaViagemDbHelper;
 import com.adalbertofjr.minhaviagem.dominio.Viagem;
-import com.adalbertofjr.minhaviagem.util.Util;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,12 +17,12 @@ import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry;
 /**
  * Created by AdalbertoF on 27/01/2016.
  */
-public class MinhaViagemDAO {
+public class ViagemDAO {
 
     private MinhaViagemDbHelper mDBhelper;
     private SQLiteDatabase database;
 
-    public MinhaViagemDAO(Context context) {
+    public ViagemDAO(Context context) {
         this.mDBhelper = new MinhaViagemDbHelper(context);
     }
 
@@ -38,8 +37,8 @@ public class MinhaViagemDAO {
         mDBhelper.close();
     }
 
-    private Long inserir(Viagem tarefa) {
-        long id = getDb().insert(ViagemEntry.TABLE_NAME, null, viagemToValue(tarefa));
+    private Long inserir(Viagem viagem) {
+        long id = getDb().insert(ViagemEntry.TABLE_NAME, null, viagemToValue(viagem));
         closeDb();
         return id;
     }

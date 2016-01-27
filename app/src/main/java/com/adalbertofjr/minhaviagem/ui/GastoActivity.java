@@ -11,10 +11,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.adalbertofjr.minhaviagem.R;
+import com.adalbertofjr.minhaviagem.dao.GastoDAO;
+import com.adalbertofjr.minhaviagem.dominio.Gasto;
+import com.adalbertofjr.minhaviagem.util.Util;
 
 import java.util.Calendar;
 
@@ -23,10 +27,17 @@ import java.util.Calendar;
  */
 public class GastoActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Spinner mTipoGasto;
-    private Button mDataGasto;
+    private static final String GASTO_EXTRA = "viagem_id";
 
     private int ano, mes, dia;
+    private int mViagemId;
+
+    private Spinner mCategoria;
+    private Button mDataGasto;
+    private Button mGastei;
+    private EditText mDescricao;
+    private EditText mValor;
+    private EditText mLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +46,21 @@ public class GastoActivity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().setTitle("Novo gasto - Recife");
 
         mDataGasto = (Button) findViewById(R.id.data_gasto);
-        mTipoGasto = (Spinner) findViewById(R.id.tipo_gasto);
+        mCategoria = (Spinner) findViewById(R.id.tipo_gasto);
+        mDescricao = (EditText) findViewById(R.id.descricao_gasto);
+        mValor = (EditText) findViewById(R.id.valor_gasto);
+        mLocal = (EditText) findViewById(R.id.local_gasto);
+
+
+        mGastei = (Button) findViewById(R.id.gastei_button);
+
+        mViagemId = getIntent().getIntExtra(GASTO_EXTRA, -1);
 
         setDadosTipoGasto();
         setDataGasto(mDataGasto);
 
         mDataGasto.setOnClickListener(this);
+        mGastei.setOnClickListener(this);
     }
 
     @Override
@@ -51,7 +71,7 @@ public class GastoActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.remover){
+        if (item.getItemId() == R.id.remover) {
             //TODO - remover gasto
             Toast.makeText(this, "Remover Gasto", Toast.LENGTH_SHORT).show();
         }
@@ -63,7 +83,7 @@ public class GastoActivity extends AppCompatActivity implements View.OnClickList
     private void setDadosTipoGasto() {
         String[] tipoGasto = this.getResources().getStringArray(R.array.tipo_gasto);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tipoGasto);
-        mTipoGasto.setAdapter(adapter);
+        mCategoria.setAdapter(adapter);
     }
 
     private void setDataGasto(Button v) {
@@ -80,6 +100,36 @@ public class GastoActivity extends AppCompatActivity implements View.OnClickList
         if (id == R.id.data_gasto) {
             showDialog(id);
         }
+
+        if (id == R.id.gastei_button) {
+            salvarGasto();
+        }
+    }
+
+    private void salvarGasto() {
+        GastoDAO gastoDAO = new GastoDAO(this);
+        Gasto gasto = getGastoDados();
+
+        long resultado = gastoDAO.salvar(gasto);
+        if(resultado != -1){
+            gasto.setId(resultado);
+            Toast.makeText(this, "Gasto Incluido", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Erro ao Incluir", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private Gasto getGastoDados() {
+        Gasto gasto = new Gasto();
+        gasto.setId(-1);
+        gasto.setData(Util.stringToDateFormat(mDataGasto.getText().toString()));
+        gasto.setCategoria(mCategoria.getSelectedItem().toString());
+        gasto.setDescricao(mDescricao.getText().toString());
+        gasto.setValor(Double.valueOf(mValor.getText().toString()));
+        gasto.setLocal(mLocal.getText().toString());
+        gasto.setViagemId(mViagemId);
+
+        return gasto;
     }
 
     /**

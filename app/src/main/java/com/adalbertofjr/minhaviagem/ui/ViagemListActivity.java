@@ -162,13 +162,15 @@ public class ViagemListActivity extends AppCompatActivity implements AdapterView
             public void onClick(DialogInterface dialog, int which) {
                 int id = (int) mViagens.get(mViagemSelecionada).get(ID);
                 switch (which) {
-                    case 0:
+                    case 0: //editar
                         Intent intent = new Intent(ViagemListActivity.this, ViagemActivity.class);
                         intent.putExtra(ViagemActivity.VIAGEM_EXTRA, id);
                         startActivity(intent);
                         break;
-                    case 1:
-                        startActivity(new Intent(ViagemListActivity.this, GastoActivity.class));
+                    case 1: //novo gasto
+                        Intent intentGasto = new Intent(ViagemListActivity.this, GastoActivity.class);
+                        intentGasto.putExtra(ViagemActivity.VIAGEM_EXTRA, id);
+                        startActivity(intentGasto);
                         break;
                     case 2:
                         startActivity(new Intent(ViagemListActivity.this, GastoListActivity.class));

@@ -2,10 +2,7 @@ package com.adalbertofjr.minhaviagem.ui;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,16 +16,13 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.adalbertofjr.minhaviagem.R;
-import com.adalbertofjr.minhaviagem.dao.MinhaViagemDAO;
-import com.adalbertofjr.minhaviagem.data.MinhaViagemContract;
+import com.adalbertofjr.minhaviagem.dao.ViagemDAO;
 import com.adalbertofjr.minhaviagem.data.MinhaViagemDbHelper;
 import com.adalbertofjr.minhaviagem.dominio.Viagem;
 import com.adalbertofjr.minhaviagem.util.Util;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry;
 
@@ -141,13 +135,13 @@ public class ViagemActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private Viagem buscarViagem(int mViagemId) {
-        MinhaViagemDAO viagemDAO = new MinhaViagemDAO(this);
-        return (Viagem) viagemDAO.listarViagens("_id = " + mViagemId).get(0);
+        ViagemDAO viagemDAO = new ViagemDAO(this);
+        return viagemDAO.listarViagens("_id = " + mViagemId).get(0);
     }
 
     public void salvarViagem() {
         Viagem viagem = getViagemDados();
-        MinhaViagemDAO viagemDAO = new MinhaViagemDAO(this);
+        ViagemDAO viagemDAO = new ViagemDAO(this);
 
         long resultado = viagemDAO.salvar(viagem);
         if (resultado != -1) {
@@ -212,7 +206,7 @@ public class ViagemActivity extends AppCompatActivity implements View.OnClickLis
             ano = year;
             mes = monthOfYear;
             dia = dayOfMonth;
-            dataChegada = criarData(ano, mes, dia);
+            dataChegada = Util.criarData(ano, mes, dia);
             mDataChegada.setText(String.format("%s/%s/%s", dia, (mes + 1), ano));
         }
     };
@@ -223,24 +217,18 @@ public class ViagemActivity extends AppCompatActivity implements View.OnClickLis
             ano = year;
             mes = monthOfYear;
             dia = dayOfMonth;
-            dataPartida = criarData(ano, mes, dia);
+            dataPartida = Util.criarData(ano, mes, dia);
             mDataPartida.setText(String.format("%s/%s/%s", dia, (mes + 1), ano));
         }
     };
-
-    private Date criarData(int anoSelecionado, int mesSelecionado, int diaSelecionado) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(anoSelecionado, mesSelecionado, diaSelecionado);
-        return calendar.getTime();
-    }
 
     private void setDataInicial(Button b) {
         Calendar calendario = Calendar.getInstance();
         ano = calendario.get(Calendar.YEAR);
         mes = calendario.get(Calendar.MONTH);
         dia = calendario.get(Calendar.DAY_OF_MONTH);
-        dataChegada = criarData(ano, mes, dia);
-        dataPartida = criarData(ano, mes, dia);
+        dataChegada = Util.criarData(ano, mes, dia);
+        dataPartida = Util.criarData(ano, mes, dia);
         b.setText(String.format("%s/%s/%s", dia, (mes + 1), ano));
     }
 }

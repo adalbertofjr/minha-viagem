@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by AdalbertoF on 27/01/2016.
  */
-public class Gasto implements Parcelable{
+public class Gasto {
     private long id;
     private Date data;
     private String categoria;
@@ -37,18 +37,6 @@ public class Gasto implements Parcelable{
         local = in.readString();
         viagemId = in.readInt();
     }
-
-    public static final Creator<Gasto> CREATOR = new Creator<Gasto>() {
-        @Override
-        public Gasto createFromParcel(Parcel in) {
-            return new Gasto(in);
-        }
-
-        @Override
-        public Gasto[] newArray(int size) {
-            return new Gasto[size];
-        }
-    };
 
     public long getId() {
         return id;
@@ -104,19 +92,5 @@ public class Gasto implements Parcelable{
 
     public void setViagemId(int viagemId) {
         this.viagemId = viagemId;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeString(categoria);
-        dest.writeString(descricao);
-        dest.writeString(local);
-        dest.writeInt(viagemId);
     }
 }

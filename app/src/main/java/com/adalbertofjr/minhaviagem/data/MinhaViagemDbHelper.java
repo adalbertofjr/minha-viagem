@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.lang.reflect.GenericArrayType;
+
 import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.*;
 
 /**
@@ -14,7 +16,7 @@ public class MinhaViagemDbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     public MinhaViagemDbHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -35,10 +37,11 @@ public class MinhaViagemDbHelper extends SQLiteOpenHelper {
                 + GastoEntry.DATA + " STRING, "
                 + GastoEntry.VALOR + " DOUBLE, "
                 + GastoEntry.DESCRICAO + " TEXT, "
+                + GastoEntry.LOCAL + " TEXT, "
                 + GastoEntry.VIAGEM_ID + " INTEGER, "
                 + "FOREIGN KEY(" + GastoEntry.VIAGEM_ID + ") REFERENCES "
                 + ViagemEntry.TABLE_NAME + "(" + ViagemEntry.ID + ")"
-                +")";
+                + ")";
 
         db.execSQL(SQL_CREATE_TABLE_VIAGEM);
         db.execSQL(SQL_CREATE_TABLE_GASTO);
@@ -47,6 +50,7 @@ public class MinhaViagemDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+      /*  db.execSQL("DROP TABLE IF EXISTS " + GastoEntry.TABLE_NAME);
+        onCreate(db);*/
     }
 }
