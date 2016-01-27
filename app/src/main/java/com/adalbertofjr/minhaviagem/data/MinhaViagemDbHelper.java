@@ -24,7 +24,7 @@ public class MinhaViagemDbHelper extends SQLiteOpenHelper {
                 + ViagemEntry.DESTINO + " TEXT, "
                 + ViagemEntry.TIPO_VIAGEM + " INTEGER, "
                 + ViagemEntry.DATA_CHEGADA + " TEXT, "
-                + ViagemEntry.DATA_SAIDA + " TEXT, "
+                + ViagemEntry.DATA_PARTIDA + " TEXT, "
                 + ViagemEntry.ORCAMENTO + " DOUBLE, "
                 + ViagemEntry.QTD_PESSOAS + " INTEGER"
                 + ");";

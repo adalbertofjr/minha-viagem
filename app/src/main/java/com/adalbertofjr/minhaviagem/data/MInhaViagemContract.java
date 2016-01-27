@@ -12,7 +12,7 @@ public class MinhaViagemContract {
         public static final String DESTINO = "destino";
         public static final String TIPO_VIAGEM = "tipo_viagem";
         public static final String DATA_CHEGADA = "data_chegada";
-        public static final String DATA_SAIDA = "data_saida";
+        public static final String DATA_PARTIDA = "data_saida";
         public static final String ORCAMENTO = "orcamento";
         public static final String QTD_PESSOAS = "quantidade_pessoas";
 

@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry.DATA_CHEGADA;
-import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry.DATA_SAIDA;
+import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry.DATA_PARTIDA;
 import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry.DESTINO;
 import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry.ID;
 import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry.ORCAMENTO;
@@ -92,7 +92,7 @@ public class ViagemListActivity extends AppCompatActivity implements AdapterView
             int tipoViagem = cursor.getInt(cursor.getColumnIndex(TIPO_VIAGEM));
             String destino = cursor.getString(cursor.getColumnIndex(DESTINO));
             long dataChegada = cursor.getLong(cursor.getColumnIndex(DATA_CHEGADA));
-            long dataSaida = cursor.getLong(cursor.getColumnIndex(DATA_SAIDA));
+            long dataSaida = cursor.getLong(cursor.getColumnIndex(DATA_PARTIDA));
             double orcamento = cursor.getDouble(cursor.getColumnIndex(ORCAMENTO));
 
             item.put(ID, id);
