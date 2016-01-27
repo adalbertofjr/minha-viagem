@@ -23,10 +23,12 @@ import com.adalbertofjr.minhaviagem.dao.MinhaViagemDAO;
 import com.adalbertofjr.minhaviagem.data.MinhaViagemContract;
 import com.adalbertofjr.minhaviagem.data.MinhaViagemDbHelper;
 import com.adalbertofjr.minhaviagem.dominio.Viagem;
+import com.adalbertofjr.minhaviagem.util.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static com.adalbertofjr.minhaviagem.data.MinhaViagemContract.ViagemEntry;
 
@@ -80,39 +82,10 @@ public class ViagemActivity extends AppCompatActivity implements View.OnClickLis
         mDataChegada.setOnClickListener(this);
         mDataPartida.setOnClickListener(this);
         mSalvaViagem.setOnClickListener(this);
-
-
-    }
-
-    private void prepararEdicao(int mViagemId) {
-        SQLiteDatabase db = mHelper.getReadableDatabase();
-
-        Cursor cursor =
-                db.rawQuery("SELECT * FROM VIAGEM WHERE _ID = ?", new String[]{mViagemId + ""});
-        cursor.moveToFirst();
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        if (cursor.getInt(0) == ViagemEntry.VIAGEM_LAZER) {
-            mTipoViagem.check(R.id.lazer);
-        } else {
-            mTipoViagem.check(R.id.negocios);
-        }
-
-        mDestino.setText(cursor.getString(cursor.getColumnIndex(ViagemEntry.DESTINO)));
-        dataChegada = new Date(cursor.getLong(cursor.getColumnIndex(ViagemEntry.DATA_CHEGADA)));
-        dataPartida = new Date(cursor.getLong(cursor.getColumnIndex(ViagemEntry.DATA_PARTIDA)));
-        mDataChegada.setText(dateFormat.format(dataChegada));
-        mDataPartida.setText(dateFormat.format(dataPartida));
-        mQuantidadePesssoas.setText(cursor.getString(cursor.getColumnIndex(ViagemEntry.QTD_PESSOAS)));
-        mOrcamento.setText(cursor.getString(cursor.getColumnIndex(ViagemEntry.ORCAMENTO)));
-        cursor.close();
-
     }
 
     @Override
     public void onClick(View v) {
-
         int id = v.getId();
 
         if (id == R.id.data_chegada) {
@@ -126,7 +99,6 @@ public class ViagemActivity extends AppCompatActivity implements View.OnClickLis
         if (id == R.id.salvar_viagem) {
             salvarViagem();
         }
-
     }
 
     @Override
@@ -137,7 +109,6 @@ public class ViagemActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == R.id.novo_gasto) {
             startActivity(new Intent(this, GastoActivity.class));
             return true;
@@ -149,6 +120,29 @@ public class ViagemActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void prepararEdicao(int mViagemId) {
+        Viagem viagem = buscarViagem(mViagemId);
+        mDestino.setText(viagem.getDestino());
+        definirTipoViagem(viagem.getTipoViagem());
+        mDataChegada.setText(Util.dateToStringFormat(viagem.getDataChegada()));
+        mDataPartida.setText(Util.dateToStringFormat(viagem.getDataPartida()));
+        mQuantidadePesssoas.setText(viagem.getQuantidadePessoas() + "");
+        mOrcamento.setText(viagem.getOrcamento() + "");
+    }
+
+    private void definirTipoViagem(int viagem) {
+        if (viagem == ViagemEntry.VIAGEM_LAZER) {
+            mTipoViagem.check(R.id.lazer);
+        } else {
+            mTipoViagem.check(R.id.negocios);
+        }
+    }
+
+    private Viagem buscarViagem(int mViagemId) {
+        MinhaViagemDAO viagemDAO = new MinhaViagemDAO(this);
+        return (Viagem) viagemDAO.listarViagens("_id = " + mViagemId).get(0);
     }
 
     public void salvarViagem() {
@@ -166,6 +160,7 @@ public class ViagemActivity extends AppCompatActivity implements View.OnClickLis
 
     /**
      * Pega dados da activity e converte em um objeto.
+     *
      * @return viagem
      */
     @NonNull

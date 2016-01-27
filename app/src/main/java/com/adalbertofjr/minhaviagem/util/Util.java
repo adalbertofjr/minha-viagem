@@ -15,7 +15,7 @@ public class Util {
         return calendar.getTime();
     }
 
-    public static String formatDateToStringFormat(Date date){
+    public static String dateToStringFormat(Date date){
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return dateFormat.format(date);
     }
