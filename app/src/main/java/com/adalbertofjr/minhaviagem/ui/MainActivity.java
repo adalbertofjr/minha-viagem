@@ -1,5 +1,6 @@
 package com.adalbertofjr.minhaviagem.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -75,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
 
         if(item.getItemId() == R.id.action_viagem){
-            Toast.makeText(this, "Minhas viagens", Toast.LENGTH_SHORT).show();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.conteudo, new ViagemListFragment(), "viagens_list");
             mDrawerLayout.closeDrawers();
             return true;
         }
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         if(item.getItemId() == R.id.action_configuracoes){
-            Toast.makeText(this, "Configurações", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, ConfiguracoesActivity.class));
             mDrawerLayout.closeDrawers();
             return true;
         }
