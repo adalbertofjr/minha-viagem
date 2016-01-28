@@ -19,7 +19,7 @@
 
         <activity
             android:name=".ui.ViagemActivity"
-            android:parentActivityName=".ui.DashBoardActivity" />
+            android:parentActivityName=".ui.MainActivity" />
 
         <activity
             android:name=".ui.GastoActivity"
