@@ -21,10 +21,12 @@ public class GastoListAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<Gasto> mGastos;
+    private String mDataAnterior;
 
     public GastoListAdapter(Context mContext, List<Gasto> mGastos) {
         this.mContext = mContext;
         this.mGastos = mGastos;
+        this.mDataAnterior ="";
     }
 
     @Override
@@ -59,9 +61,17 @@ public class GastoListAdapter extends BaseAdapter {
         }
 
         Gasto gasto = mGastos.get(position);
-        viewHolder.data.setText(Util.dateToStringFormat(gasto.getData()));
-        int cor = mContext.getResources().getColor(R.color.categoria_alimentacao);
-        viewHolder.categoria.setBackgroundColor(cor);
+        String data = Util.dateToStringFormat(gasto.getData());
+
+        if(!mDataAnterior.equals(data)){
+            viewHolder.data.setVisibility(View.VISIBLE);
+            viewHolder.data.setText(data);
+            mDataAnterior = data;
+        }else {
+            viewHolder.data.setVisibility(View.GONE);
+        }
+        //int cor = mContext.getResources().getColor(R.color.categoria_alimentacao);
+       // viewHolder.categoria.setBackgroundColor(cor);
         viewHolder.descricao.setText(gasto.getDescricao());
         viewHolder.valor.setText(gasto.getValor().toString());
 

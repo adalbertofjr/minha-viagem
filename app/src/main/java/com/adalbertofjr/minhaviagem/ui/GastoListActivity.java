@@ -41,6 +41,8 @@ public class GastoListActivity extends AppCompatActivity implements AdapterView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_gastos);
 
+        getSupportActionBar().setTitle(getResources().getString(R.string.gastos_realizados));
+
         mListaGastos = (ListView) findViewById(R.id.listar_gastos);
 
         mGastos = listarGastos();

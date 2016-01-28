@@ -74,7 +74,7 @@ public class GastoDAO {
             //argumentos = new String[]{filtro};
         }
 
-        //sql += " ORDER BY " + GastoEntry.DATA_CHEGADA;
+        sql += " ORDER BY " + GastoEntry.DATA + " desc;";
 
         Cursor cursor = getDb().rawQuery(sql, null);
 
