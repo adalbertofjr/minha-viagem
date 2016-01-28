@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.adalbertofjr.minhaviagem.data.MinhaViagemContract;
 import com.adalbertofjr.minhaviagem.data.MinhaViagemContract.GastoEntry;
 import com.adalbertofjr.minhaviagem.data.MinhaViagemDbHelper;
 import com.adalbertofjr.minhaviagem.dominio.Gasto;
@@ -36,7 +35,7 @@ public class GastoDAO {
         mDBhelper.close();
     }
 
-    private Long inserir(Gasto gasto) {
+    private long inserir(Gasto gasto) {
         long id = getDb().insert(GastoEntry.TABLE_NAME, null, gastoToValue(gasto));
         closeDb();
         return id;
@@ -46,28 +45,27 @@ public class GastoDAO {
         String where = GastoEntry.ID + "=?";
         String[] whereArgs = new String[]{String.valueOf(gasto.getId())};
         long linhasAlteradas = getDb().update(GastoEntry.TABLE_NAME, gastoToValue(gasto), where, whereArgs);
-
         closeDb();
         return linhasAlteradas;
     }
 
-    public Long salvar(Gasto gasto) {
+    public long salvar(Gasto gasto) {
         if (gasto.getId() == -1) {
             return inserir(gasto);
         }
         return atualizar(gasto);
     }
 
-    public int excluir(Gasto gasto) {
+    public long excluir(Gasto gasto) {
         String where = GastoEntry.ID + "=?";
-        String[] whereArgs = new String[]{String.valueOf(GastoEntry.ID)};
-        int linhasExcluidas = getDb().update(GastoEntry.TABLE_NAME, gastoToValue(gasto), where, whereArgs);
+        String[] whereArgs = new String[]{String.valueOf(gasto.getId())};
+        long linhasExcluidas = getDb().delete(GastoEntry.TABLE_NAME, where, whereArgs);
 
         closeDb();
         return linhasExcluidas;
     }
 
-    public List<Gasto> listarViagens(String filtro) {
+    public List<Gasto> listarGastos(String filtro) {
         String sql = "SELECT * FROM " + GastoEntry.TABLE_NAME;
         String[] argumentos = null;
 

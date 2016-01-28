@@ -31,6 +31,7 @@ public class GastoActivity extends AppCompatActivity implements View.OnClickList
 
     private int ano, mes, dia;
     private int mViagemId;
+    private long mGastoId = -1;
 
     private Spinner mCategoria;
     private Button mDataGasto;
@@ -53,7 +54,6 @@ public class GastoActivity extends AppCompatActivity implements View.OnClickList
 
 
         mGastei = (Button) findViewById(R.id.gastei_button);
-
         mViagemId = getIntent().getIntExtra(GASTO_EXTRA, -1);
 
         setDadosTipoGasto();
@@ -111,8 +111,9 @@ public class GastoActivity extends AppCompatActivity implements View.OnClickList
         Gasto gasto = getGastoDados();
 
         long resultado = gastoDAO.salvar(gasto);
-        if(resultado != -1){
-            gasto.setId(resultado);
+
+        if(resultado > 0){
+            mGastoId = resultado;
             Toast.makeText(this, "Gasto Incluido", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(this, "Erro ao Incluir", Toast.LENGTH_SHORT).show();
@@ -121,7 +122,7 @@ public class GastoActivity extends AppCompatActivity implements View.OnClickList
 
     private Gasto getGastoDados() {
         Gasto gasto = new Gasto();
-        gasto.setId(-1);
+        gasto.setId(mGastoId);
         gasto.setData(Util.stringToDateFormat(mDataGasto.getText().toString()));
         gasto.setCategoria(mCategoria.getSelectedItem().toString());
         gasto.setDescricao(mDescricao.getText().toString());
