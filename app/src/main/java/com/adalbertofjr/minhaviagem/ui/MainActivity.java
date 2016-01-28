@@ -31,7 +31,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        //Navigation Drawer
+        criarNavigationDrawer();
+
+        if (savedInstanceState == null) {
+            mOpcaoSelecionada = R.id.action_viagem;
+        } else {
+            mOpcaoSelecionada = savedInstanceState.getInt("menuItem");
+        }
+
+        selecionarOpcaoMenu(mNavigationMenu.getMenu().findItem(mOpcaoSelecionada));
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.conteudo, new ViagemListFragment(), "viagens_list")
+                .commit();
+    }
+
+    private void criarNavigationDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -46,17 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Navigation Menu
         mNavigationMenu = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationMenu.setNavigationItemSelectedListener(this);
-
-        if(savedInstanceState == null){
-            mOpcaoSelecionada = R.id.action_viagem;
-        }else{
-            mOpcaoSelecionada = savedInstanceState.getInt("menuItem");
-        }
-
-        selecionarOpcaoMenu(mNavigationMenu.getMenu().findItem(mOpcaoSelecionada));
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.conteudo, new ViagemListFragment(), "viagens_list");
     }
 
     @Override
@@ -75,20 +80,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        if(item.getItemId() == R.id.action_viagem){
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.conteudo, new ViagemListFragment(), "viagens_list");
+        if (item.getItemId() == R.id.action_viagem) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.conteudo, new ViagemListFragment(), "viagens_list")
+                    .commit();
             mDrawerLayout.closeDrawers();
             return true;
         }
 
-        if(item.getItemId() == R.id.action_gasto){
+        if (item.getItemId() == R.id.action_gasto) {
             Toast.makeText(this, "Meus Gastos", Toast.LENGTH_SHORT).show();
             mDrawerLayout.closeDrawers();
             return true;
         }
 
-        if(item.getItemId() == R.id.action_configuracoes){
+        if (item.getItemId() == R.id.action_configuracoes) {
             startActivity(new Intent(this, ConfiguracoesActivity.class));
             mDrawerLayout.closeDrawers();
             return true;

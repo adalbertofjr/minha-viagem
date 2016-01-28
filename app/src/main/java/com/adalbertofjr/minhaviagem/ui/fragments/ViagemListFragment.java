@@ -31,9 +31,10 @@ public class ViagemListFragment extends Fragment {
 
         mViagemAdapter = new ViagemListAdapter(getContext(), listarViagens());
         mListViagens.setAdapter(mViagemAdapter);
+        mListViagens.setEmptyView(layout.findViewById(R.id.lista_vazia));
 
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return layout;
     }
 
     private List<Viagem> listarViagens() {
