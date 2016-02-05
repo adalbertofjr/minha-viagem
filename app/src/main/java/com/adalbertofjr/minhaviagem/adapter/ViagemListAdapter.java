@@ -79,6 +79,7 @@ public class ViagemListAdapter extends BaseAdapter {
         return convertView;
     }
 
+
     static class ViewHolder {
         public ImageView imagem;
         public TextView destino;
